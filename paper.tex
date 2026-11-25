@@ -1,16 +1,86 @@
-\documentclass[11pt, letterpaper]{article} % for ArXiV
+%\documentclass[11pt, letterpaper]{article} % for ArXiV
 %\documentclass[twoside,leqno]{article}   % for SODA
 
 
+\documentclass[anonymous,a4paper,USenglish,cleveref,autoref,thm-restate] {socg-lipics-v2021}
+%This is a template for producing LIPIcs articles. 
+%See lipics-v2021-authors-guidelines.pdf for further information.
+%for A4 paper format use option "a4paper", for US-letter use option "letterpaper"
+%for british hyphenation rules use option "UKenglish", for american hyphenation rules use option "USenglish"
+%for section-numbered lemmas etc., use "numberwithinsect"
+%for enabling cleveref support, use "cleveref"
+%for enabling autoref support, use "autoref"
+%for anonymousing the authors (e.g. for double-blind review), add "anonymous"
+%for enabling thm-restate support, use "thm-restate"
+%for enabling a two-column layout for the author/affilation part (only applicable for > 6 authors), use "authorcolumns"
+%for producing a PDF according the PDF/A standard, add "pdfa"
+
+%\pdfoutput=1 %uncomment to ensure pdflatex processing (mandatatory e.g. to submit to arXiv)
+%\hideLIPIcs  %uncomment to remove references to LIPIcs series (logo, DOI, ...), e.g. when preparing a pre-final version to be uploaded to arXiv or another public repository
+
+%\graphicspath{{./graphics/}}%helpful if your graphic files are in another directory
+
+\bibliographystyle{plainurl}% the mandatory bibstyle
+\title{Adaptive and Approximate Orthogonal Range Counting in 3-d}
+
+
+%\titlerunning{Dummy short title} %TODO optional, please use if title is longer than one line
+
+\author{Jane {Open Access}}{Dummy University Computing Laboratory, [optional: Address], Country \and My second affiliation, Country \and \url{http://www.myhomepage.edu} }{johnqpublic@dummyuni.org}{https://orcid.org/0000-0002-1825-0097}{(Optional) author-specific funding acknowledgements}%TODO mandatory, please use full name; only 1 author per \author macro; first two parameters are mandatory, other parameters can be empty. Please provide at least the name of the affiliation and the country. The full address is optional. Use additional curly braces to indicate the correct name splitting when the last name consists of multiple name parts.
+
+\author{Joan R. Public\footnote{Optional footnote, e.g. to mark corresponding author}}{Department of Informatics, Dummy College, [optional: Address], Country}{joanrpublic@dummycollege.org}{[orcid]}{[funding]}
+
+\authorrunning{J. Open Access and J.\,R. Public} %TODO mandatory. First: Use abbreviated first/middle names. Second (only in severe cases): Use first author plus 'et al.'
+
+\Copyright{Jane Open Access and Joan R. Public} %TODO mandatory, please use full first names. LIPIcs license is "CC-BY";  http://creativecommons.org/licenses/by/3.0/
+
+%\ccsdesc[100]{\textcolor{red}{Replace ccsdesc macro with valid one}} %TODO mandatory: Please choose ACM 2012 classifications from https://dl.acm.org/ccs/ccs_flat.cfm 
+
+\ccsdesc[500]{Theory of computation~Data structures and algorithms for data management}
+\ccsdesc[100]{Theory of computation~Computational geometry}
+%\ccsdesc[100]{Theory of computation~Data structures design and analysis}
+
+\keywords{Data Structures, I/O-efficient algorithms, Orthogonal Range Searching.} %TODO mandatory; please add comma-separated list of keywords
+
+\category{} %optional, e.g. invited paper
+
+\relatedversion{} %optional, e.g. full version hosted on arXiv, HAL, or other respository/website
+%\relatedversiondetails[linktext={opt. text shown instead of the URL}, cite=DBLP:books/mk/GrayR93]{Classification (e.g. Full Version, Extended Version, Previous Version}{URL to related version} %linktext and cite are optional
+
+%\supplement{}%optional, e.g. related research data, source code, ... hosted on a repository like zenodo, figshare, GitHub, ...
+%\supplementdetails[linktext={opt. text shown instead of the URL}, cite=DBLP:books/mk/GrayR93, subcategory={Description, Subcategory}, swhid={Software Heritage Identifier}]{General Classification (e.g. Software, Dataset, Model, ...)}{URL to related version} %linktext, cite, and subcategory are optional
+
+%\funding{(Optional) general funding statement \dots}%optional, to capture a funding statement, which applies to all authors. Please enter author specific funding statements as fifth argument of the \author macro.
+
+\acknowledgements{I want to thank \dots}%optional
+
+%\nolinenumbers %uncomment to disable line numbering
+
+
+
+%Editor-only macros:: begin (do not touch as author)%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\EventEditors{John Q. Open and Joan R. Access}
+\EventNoEds{2}
+\EventLongTitle{42nd Conference on Very Important Topics (CVIT 2016)}
+\EventShortTitle{CVIT 2016}
+\EventAcronym{CVIT}
+\EventYear{2016}
+\EventDate{December 24--27, 2016}
+\EventLocation{Little Whinging, United Kingdom}
+\EventLogo{}
+\SeriesVolume{42}
+\ArticleNo{23}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %\usepackage[margin=0.7in]{geometry}
-\usepackage[margin=1in]{geometry}
-\usepackage{charter}
+%\usepackage[margin=1in]{geometry}
+%\usepackage{charter}
 
 \usepackage{amsfonts, amsmath, amssymb, amsthm}
 \usepackage{bm}
 \usepackage{verbatim}
 % \usepackage{color}
-\usepackage{euscript}
+%\usepackage{euscript}
 \usepackage{graphicx}
 \usepackage[usenames,dvipsnames]{xcolor}
 % BEGIN EDIT: Item 6 (underlining support)
@@ -46,38 +116,18 @@
 \def\vgap{\vspace{0.1 in}}
 
 
-\newcommand{\occ}{\mathtt{occ}}
-\newcommand{\head}{\mathtt{head}}
-\newcommand{\tail}{\mathtt{tail}}
-\newcommand{\leaf}{\mathtt{leaf}}
-\newcommand{\Dict}{\mathtt{Dict}}
-\newcommand{\child}{\mathtt{child}}
-\newcommand{\strdepth}{\mathtt{strdepth}}
-\newcommand{\lab}{\mathtt{label}}
-\newcommand{\slabel}{\mathtt{label}}
-\newcommand{\init}{\mathtt{init}}
-\newcommand{\weight}{\mathtt{weight}}
-\newcommand{\slink}{\mathtt{slink}}
-\newcommand{\wlink}{\mathtt{wlink}}
-\newcommand{\parent}{\mathtt{parent}}
-\newcommand{\lca}{\mathtt{lca}}
-\newcommand{\pref}{\mathtt{pref}}
-\newcommand{\num}{\mathtt{num}}
-\newcommand{\spath}{\operatorname{path}}
-\newcommand{\lcp}{\operatorname{LCP}}
-\newcommand{\Lowest}{\operatorname{Lowest}}
 
 \newcommand{\apex}{\operatorname{apex}}
 
-\newcommand{\tselect}{\mathtt{select}}
-\newcommand{\fin}{\mathtt{end}}
 \newcommand{\vare}{\varepsilon}
 
-\newcommand{\cT}{\mathcal{T}}
-\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cO}{\mathcal{O}}
 \newcommand{\cC}{\mathcal{C}}
 \newcommand{\cG}{\mathcal{G}}
 \newcommand{\cR}{\mathcal{R}}
+\newcommand{\Ov}{\cO}
 
 
 \newcommand{\tcr}[1]{\textcolor{red}{#1}}
@@ -85,15 +135,13 @@
 \newcommand{\tcg}[1]{\textcolor{green}{#1}}
 \newcommand{\tcc}[1]{\textcolor{cyan}{#1}}
 \newcommand{\yakov}[1]{\textbf{Yakov: }\tcr{#1}}
-%\newcommand{\gk}[1]{\textcolor{blue}{#1}}
-\newcommand{\gk}[1]{}
 
 
 
-% \newcommand{\gktext}[1]{\color{magenta}{#1}}
-\long\def\gktext#1{{\color{magenta}#1}}
 
 
+
+% \author{}
 
 \newcommand{\commented}[1]{}
 % Old text (red, struck out) followed by the new text (green)
@@ -108,15 +156,16 @@
 
 \renewcommand{\arraystretch}{1.3}
 
-\newtheorem{theorem}{Theorem}
-\newtheorem{lemma}{Lemma}
-\newtheorem{corollary}{Corollary}
-\newtheorem{observation}{Observation}
-\newtheorem{proposition}{Proposition}
-\newtheorem{definition}{Definition}
-\newtheorem{problem}{Problem}
+% \newtheorem{theorem}{Theorem}
+% \newtheorem{lemma}{Lemma}
+% \newtheorem{corollary}{Corollary}
+% \newtheorem{observation}{Observation}
+% \newtheorem{proposition}{Proposition}
+% \newtheorem{definition}{Definition}
+% \newtheorem{problem}{Problem}
 
 \begin{document}
+\maketitle
 
 \section{Preliminaries}
 \label{sec:prelim}
@@ -166,17 +215,33 @@ for every polygon $R^j$ we also store the corresponding cell $C^j\in \cC_j$.  Fo
 
 \subsection{Step 2: Better Approximation}
 \label{sec:step2}
-For each cell $C$ of a $t_i$-shallow cutting $\cC_i$ we construct a sequence of $f_j$-shallow cuttings $F_j(C)$ for $L(C)$. We set  $f_j=t_i/(c_1)^j$ for a constant $c_1$ that will be defined later.  We consider the set of rectangles $\cR_j(C)$ for each $F_j(C)$.  The overlay $Ov(C)$ of all $\cR_j(C)$ has complexity $O(t_i^{2/3}\log t_i)=o(t_i)$. For every cell of the overlay we store the rectangles containing 
+For each cell $C$ of a $t_i$-shallow cutting $\cC_i$ we construct a sequence of $f_j$-shallow cuttings $\cF_j(C)$ for $L(C)$. We set  $f_j=t_i/(c_1)^j$ for a constant $c_1$ that will be defined later.  We consider the planar subdivision $\cR_j(C)$ for each $\cF_j(C)$ and the overlay $Ov(C)$ of all $\cR_j(C)$.  has complexity $O(t_i^{2/3}\log t_i)=o(t_i)$: since $F_j(C)$ has $O(t_i^{1/3})$ cells, $\cR_j(C)$ has $O(t_i^{1/3})$ segments. Since a segment of $R_j(C)$ can intersect $O(t_i^{1/3})$ other segments, the complexity of $\Ov(C)$ is $O(t_i^{2/3})$. We store the point location data structure for $\Ov(C)$.  Additionally, for every face $g$  of the overlay $\Ov(C)$, we store the list of cells $I(g)$; $I(g)$ contains cells $F_j\in \cF_j(C)$, such that the polygon of $F_j$ contains $g$. Cells in $I(g)$ are ordered in decreasing order of $j$. 
 
 
+Suppose that the query point $q$ is contained in a cell $C$ of the $t_i$-shallow cutting.  And we know that $q$ is not contained in any cell of a $t_{i+1}$-shallow cutting, i.e., the level of $q$ is larger than $t_{i+1}$. We find the face $g_q$ of $\Ov(C)$ in $O(\log\log n)$ time. Then we use binary search on $I(g_q)$ and find the largest $j$, such that $F_j(C)$ contains $q$.  The overall query time is $O(\log\log n)$.
+
+When $j$ is found, we obtain a constant-factor approximation for the number of points dominated by $q$: $q$ dominates more than $\frac{t_i}{c_1^{j+1}}$ points and less than $\frac{t_i}{c_1^j}$ points.  
+
+\subsection{Step 3: Refining}
+\label{sec:step3}
+We keep a sequence of $(\delta)^i$-shallow cuttings $\cD_i$. We calculate the largest $k$, such that $(\delta)^k\leq \frac{t_i}{c_1^{j+1}}$. We increment $k$ by $1$ until we find the smallest index $k$, such that $q$ is in some cell of $\cD_k$. The index $k$ is incremented $\frac{c_1}{\delta}=O(1)$ times. For every $\cD_k$, we can check if $q$ is in some cell of $\cD_k$ in $O(\log\log n)$ time. Hence the overall time of the third step is $O(\log \log n)$.
+
+Our result can be summed up in the following theorem.
+\begin{theorem}
+  \label{theor:domin-approx}
+ There exists a data structure that answers approximate dominance reporting queries in $O(\log \log n)$ time. The data structure uses $O(n)$ space.
+\end{theorem}
 
 
-Suppose that the query point $q$ is contained in a cell $C$ of the $t_i$-shallow cutting.  And we know that $q$ is not contained in any cell of a $t_{i+1}$-shallow cutting, i.e., the level of $q$ is larger than $t_{i+1}$.
+\section{Approximate Range Counting for General 3-d Queries}
+\label{sec:label}
+\begin{lemma}
+  There exists an $O(n\log^{\eps}n)$-space data structure that answers 5-sided 3-d approximate range counting queries in $O(\log \log n)$ time. 
+\end{lemma}
 
-
-
-
-
+\begin{theorem}
+  There exists an $O(n\log^{1+\eps}n)$-space data structure that answers general 3-d approximate range counting queries in $O(\log \log n)$ time. 
+\end{theorem}
 
 
 \end{document}
