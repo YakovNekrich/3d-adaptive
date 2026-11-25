@@ -1,0 +1,188 @@
+\documentclass[11pt, letterpaper]{article} % for ArXiV
+%\documentclass[twoside,leqno]{article}   % for SODA
+
+
+%\usepackage[margin=0.7in]{geometry}
+\usepackage[margin=1in]{geometry}
+\usepackage{charter}
+
+\usepackage{amsfonts, amsmath, amssymb, amsthm}
+\usepackage{bm}
+\usepackage{verbatim}
+% \usepackage{color}
+\usepackage{euscript}
+\usepackage{graphicx}
+\usepackage[usenames,dvipsnames]{xcolor}
+% BEGIN EDIT: Item 6 (underlining support)
+% NEW:
+\usepackage[normalem]{ulem}
+% END EDIT: Item 6 (underlining support)
+\newcommand{\deltext}[1]{{\color{red}\sout{#1}}\ }
+\newcommand{\instext}[1]{{\color{ForestGreen}#1}}
+\newenvironment{deltextblock}{\par\def\normalcolor{\color{red}}\color{red}\noindent\textbf{[Deleted:]}\ }{\par}
+\newenvironment{instextblock}{\par\def\normalcolor{\color{ForestGreen}}\color{ForestGreen}\noindent\textbf{[Inserted:]}\ }{\par}
+%\usepackage{paralist}
+%\usepackage{subcaption}
+\usepackage{tikz}
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{calc}
+
+\usepackage{algpseudocode}
+
+\usepackage{xspace}
+\usepackage{wrapfig}
+\usepackage{url}
+
+
+
+
+\def\figcapup{\vspace{-0mm}}
+\def\figcapdown{\vspace{-0mm}}
+\def\extraspacing{\vspace{2mm} \noindent}
+\def\minilen{0.95\linewidth}
+\def\vgap{\vspace{0.1 in}}
+
+
+\newcommand{\occ}{\mathtt{occ}}
+\newcommand{\head}{\mathtt{head}}
+\newcommand{\tail}{\mathtt{tail}}
+\newcommand{\leaf}{\mathtt{leaf}}
+\newcommand{\Dict}{\mathtt{Dict}}
+\newcommand{\child}{\mathtt{child}}
+\newcommand{\strdepth}{\mathtt{strdepth}}
+\newcommand{\lab}{\mathtt{label}}
+\newcommand{\slabel}{\mathtt{label}}
+\newcommand{\init}{\mathtt{init}}
+\newcommand{\weight}{\mathtt{weight}}
+\newcommand{\slink}{\mathtt{slink}}
+\newcommand{\wlink}{\mathtt{wlink}}
+\newcommand{\parent}{\mathtt{parent}}
+\newcommand{\lca}{\mathtt{lca}}
+\newcommand{\pref}{\mathtt{pref}}
+\newcommand{\num}{\mathtt{num}}
+\newcommand{\spath}{\operatorname{path}}
+\newcommand{\lcp}{\operatorname{LCP}}
+\newcommand{\Lowest}{\operatorname{Lowest}}
+
+\newcommand{\apex}{\operatorname{apex}}
+
+\newcommand{\tselect}{\mathtt{select}}
+\newcommand{\fin}{\mathtt{end}}
+\newcommand{\vare}{\varepsilon}
+
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cR}{\mathcal{R}}
+
+
+\newcommand{\tcr}[1]{\textcolor{red}{#1}}
+\newcommand{\tcb}[1]{\textcolor{blue}{#1}}
+\newcommand{\tcg}[1]{\textcolor{green}{#1}}
+\newcommand{\tcc}[1]{\textcolor{cyan}{#1}}
+\newcommand{\yakov}[1]{\textbf{Yakov: }\tcr{#1}}
+%\newcommand{\gk}[1]{\textcolor{blue}{#1}}
+\newcommand{\gk}[1]{}
+
+
+
+% \newcommand{\gktext}[1]{\color{magenta}{#1}}
+\long\def\gktext#1{{\color{magenta}#1}}
+
+
+
+\newcommand{\commented}[1]{}
+% Old text (red, struck out) followed by the new text (green)
+%\newcommand{\oldtext}[1]{{\color{red}\sout{#1}}\ }
+\newcommand{\oldtext}{}
+%\newcommand{\newtext}[1]{{\color{ForestGreen}#1}}
+\newcommand{\newtext}[1]{#1}
+
+\newenvironment{oldtextblock}{\par\def\normalcolor{\color{red}}\color{red}\noindent\textbf{[Old text:]}\ }{\par}
+\newenvironment{newtextblock}{\par\def\normalcolor{\color{ForestGreen}}\color{ForestGreen}\noindent\textbf{[New text:]}\ }{\par}
+
+
+\renewcommand{\arraystretch}{1.3}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{observation}{Observation}
+\newtheorem{proposition}{Proposition}
+\newtheorem{definition}{Definition}
+\newtheorem{problem}{Problem}
+
+\begin{document}
+
+\section{Preliminaries}
+\label{sec:prelim}
+For a three-dimensional geometric object $x$ (point, rectangle, etc.) we denote by $\pi(x)$ the projection of $x$ onto the $xy$-plane. 
+
+shallow cuttings, definition
+
+We associate a polygon $R(C)$ with every cell $C$ of $\cC$ in the following way. We visit  the apex points of cells $C\in \cC$ in the decreasing order of their $z$-coordinates; for every point $r=\mathrm{apex}(C)$, we shoot vertical rays from $\pi(r)$ until they hit the axes or one of the staircases of $\cC$, or one of the previously constructed polygons. We will denote the polygon of $C$ by $R(C)$.   
+
+\section{Dominance Queries}
+\label{sec:domin-approx}
+\subsection{Step 1}
+\label{sec:step1}
+Let $t_i=n^{g(i)}$ where $g(i)=(\frac{2}{3})^i$. We construct a sequence of $t_i$-shallow cuttings $\cC_i$ and  planar  subdivisions $\cR_i$ for $i=0$, $1$,$\ldots$.
+
+Since $t_0=n$, the $t_0$-shallow cutting consists of a single cell $C$  that contains all points of the input set $P$, so that $L(C)=P$. The subdivision $\cR_0$ contains a single rectangle $R_0=\pi(C)$.  The $t_1$-shallow cutting consists of $n^{1/3}$ cells that cover the $\leq n^{2/3}$-level of $P$. We associate a polygon $R_j=R(C_j)$ to every cell $C_j$ of $\cC_1$. 
+
+Suppose that the $t_{i-1}$-shallow cutting $\cC_i$ is already constructed. We construct $\cC_i$ and $\cR_i$ as follows. For each cell $C_j\in \cC_{i-1}$, we construct an $n^{g(i)}$-shallow cutting  $\cG^i_j$.  A cell $C$ of $\cG^i_j$ is \emph{valid} iff $\pi(\apex(C))$ is in $R_j$.
+We visit all valid cells $C_k$ of $\cG^i_j$ in the decreasing order of their $z$ coordinates and let $R_k=R(C_k)\cap R_j$. The $t_i$-shallow cutting $\cC_i$ is the union of all  valid cells $C_j$ in all $\cG^i_j$. The set $\cR_i$ consists of all polygons $R_k$ for all cells $C_k$ in $\cC_i$. 
+
+\begin{lemma}
+  $\cC_i$ has  $O(\frac{n}{n^{g(i)}}c^i$ cells for some constant $c$.  $\cC_i$ covers the $\leq t_i$-level of $P$.
+\end{lemma}
+\begin{proof}
+  Let $r$ denote arbitrary point, such that the level of $r$ is at most $t_i$.  Since the $\leq t_i$-level of $P$ is contained in the $t_{i-1}$-level, $r$ is in at least one cell of $\cC_{i-1}$. Let $C_k$ denote the cell of $\cC_{i-1}$ with the highest $z$-coordinate such that $\apex(C_k)$ dominates $r$.  Then $\pi(r)$ is in the polygon of $C_k$.  Let $G_k$ denote the cell of $\cG^i_k$ with the highest $z$-coordinate, such that $G_k$ contains $r$. Since   $\apex(G_k)$ dominates $r$  and $\apex(C_k)$ dominates $\apex(G_k)$,  $\pi(\apex(G_k))$  is in the polygon of $C_k$. Hence $G_k$ is a valid cell of $\cG^i_k$ and $G_k$ is in $\cC_i$.
+\end{proof}
+
+\begin{lemma}
+  \label{lemma:subdiv-size}
+  $\cR_i$ is a subdivision of the plane with $O(|\cC_i|)$ vertices. 
+\end{lemma}
+\begin{proof}
+  
+\end{proof}
+
+
+\begin{lemma}
+  \label{lemma:rect-contain}
+  Each polygon $R^i\in \cR_i$ is contained in some polygon $R^{i-1}\in \cR_{i-1}$.  
+\end{lemma}
+\begin{proof}
+  Directly follows from the construction: every polygon of a cell $G\in G^i_k$ is a sub-polygon of $R_k$, where $R_k$ is the polygon of $C_k\in \cC_{i-1}$.
+\end{proof}
+
+We construct shallow cuttings $\cC_i$ and planar subdivisions $\cR_i$ for $i=1,2,\ldots g$, such that $n^{g(i)}\leq \log^{c'}n$ for some constant $c'$ that will be defined later.  For each polygon $R\in \cR_g$, we store the polygons $R^j\in \cR_j$, $0\le j < g$, such that $R^j$ contains $R$;
+for every polygon $R^j$ we also store the corresponding cell $C^j\in \cC_j$.  For a given query point $q$, we identify the rectangle $R_g\in \cR_g$ that contains $\pi(q)$.   Then we examine all cells $C^j$ and find the largest $j$ such that $C^j$ contains $q$.  Since we can locate $\pi_q$ in $\cR_g$ in $O(\log\log n)$ time using the data structure of Chan~\cite{Chan??}, the overall query time is $O(\log \log n)$.
+
+\subsection{Step 2: Better Approximation}
+\label{sec:step2}
+For each cell $C$ of a $t_i$-shallow cutting $\cC_i$ we construct a sequence of $f_j$-shallow cuttings $F_j(C)$ for $L(C)$. We set  $f_j=t_i/(c_1)^j$ for a constant $c_1$ that will be defined later.  We consider the set of rectangles $\cR_j(C)$ for each $F_j(C)$.  The overlay $Ov(C)$ of all $\cR_j(C)$ has complexity $O(t_i^{2/3}\log t_i)=o(t_i)$. For every cell of the overlay we store the rectangles containing 
+
+
+
+
+Suppose that the query point $q$ is contained in a cell $C$ of the $t_i$-shallow cutting.  And we know that $q$ is not contained in any cell of a $t_{i+1}$-shallow cutting, i.e., the level of $q$ is larger than $t_{i+1}$.
+
+
+
+
+
+
+
+\end{document}
+
+
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: t
+%%% End:
